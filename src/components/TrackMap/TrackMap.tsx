@@ -5,7 +5,7 @@ import L from 'leaflet';
 import marker from "../../img/marker.svg";
 import { Polyline } from 'react-leaflet';
 import useTrackMap from './TrackMap.hook';
-
+import './TrackMap.css';
 
 export default function TrackMap() {
     const {
@@ -20,7 +20,7 @@ export default function TrackMap() {
 
     return (
         <MapContainer
-            className="MapContainerTest"
+            className="map-container"
             center={[51.0, 19.0]}
             zoom={4}
             maxZoom={18}
