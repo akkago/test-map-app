@@ -1,0 +1,1 @@
+export const makeDeepCopy = (object: Object) => JSON.parse(JSON.stringify(object));
