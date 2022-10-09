@@ -1,7 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import tracks from '../../mock/mock';
 import { tracksAwaitAction, tracksErrorAction, tracksSuccessAction } from '../actions/action-creators/tracks.action-creator';
-import { ITrackListError } from '../actions/models/tracks.model';
+import { ITrack, ITrackListError } from '../actions/models/tracks.model';
 
 export const fetchTracks = () => {
   return { type: 'FETCHED_TRACK' }
@@ -21,6 +21,24 @@ function* fetchTracksAsync() {
     //   }
     // );
     yield put(tracksSuccessAction(data));
+  } catch (error) {
+    yield put(tracksErrorAction(error as ITrackListError));
+  }
+}
+
+
+export const updateTracks = (tracks?: ITrack[]) => {
+  return { type: 'UPDATE_TRACK', data: tracks }
+};
+
+export function* watchUpdateTracks() {
+  yield takeEvery('UPDATE_TRACK', updateTracksAsync);
+}
+
+function* updateTracksAsync(action?: any) {
+  try {
+    yield put(tracksAwaitAction());
+    yield put(tracksSuccessAction(action?.data));
   } catch (error) {
     yield put(tracksErrorAction(error as ITrackListError));
   }

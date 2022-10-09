@@ -3,7 +3,7 @@ import './App.css';
 import TrackMap from './components/TrackMap/TrackMap';
 import TrackTable from './components/TrackTable/TrackTable';
 import ResizePanel from "react-resize-panel";
-
+import 'antd/dist/antd.css';
 
 function App() {
   return (
