@@ -1,7 +1,6 @@
 import { makeDeepCopy } from "../../utils/utils";
 import { SELECTED_TRACK_AWAIT, SELECTED_TRACK_ERROR, SELECTED_TRACK_SUCCESS } from "../actions/action-types/selectedTrack.type";
-import { ISelectedTrackActionAction } from "../actions/models/selectedTrack.model";
-import { ITrackState } from "../actions/models/tracks.model";
+import { ISelectedTrackActionAction, ITrackState } from "../actions/models/selectedTrack.model";
 
 const initialTrackListState: ITrackState = {
   responseData: null,

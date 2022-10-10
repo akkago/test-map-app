@@ -16,6 +16,19 @@ interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     children: React.ReactNode;
 }
 
+export default function TrackTable() {
+    const {
+        tracks,
+        onSelectedTrackChange,
+        trackPoints,
+        selectedTrack
+    } = useTrackTable();
+    const [form] = Form.useForm();
+    const [editingKey, setEditingKey] = useState('');
+    const isEditing = (record: ITrack) => record.key === editingKey;
+
+
+    
 const EditableCell: React.FC<EditableCellProps> = ({
     editing,
     dataIndex,
@@ -27,13 +40,17 @@ const EditableCell: React.FC<EditableCellProps> = ({
     ...restProps
 }) => {
 
+    // const {
+    //     trackPoints,
+    // } = useTrackTable();
+
     // <Input />
     // <Select defaultValue="lucy" style={{ width: 120 }} onChange={}>
     //                     <Option value="jack">Jack</Option>
     //                     <Option value="lucy">Lucy</Option>
     //                     <Option value="Yiminghe">yiminghe</Option>
     //                 </Select>
-
+    const options = trackPoints?.map((tp) => <Option value={tp}>{tp}</Option>);
     return (
         <td {...restProps}>
             {editing ? (
@@ -48,10 +65,11 @@ const EditableCell: React.FC<EditableCellProps> = ({
                     ]}
                 >
                     <Select defaultValue={record[dataIndex]} style={{ width: 120 }} >
-                        <Option value="jack">Jack</Option>
+                        {options}
+                        {/* <Option value="jack">Jack</Option>
                         <Option value="lucy">Lucy</Option>
                         <Option value="Yiminghe">yiminghe</Option>
-                        <Option value={record[dataIndex]}>{record[dataIndex]}</Option>
+                        <Option value={record[dataIndex]}>{record[dataIndex]}</Option> */}
                     </Select>
 
 
@@ -63,15 +81,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
     );
 };
 
-export default function TrackTable() {
-    const {
-        tracks,
-        onSelectedTrackChange,
-        selectedTrack
-    } = useTrackTable();
-    const [form] = Form.useForm();
-    const [editingKey, setEditingKey] = useState('');
-    const isEditing = (record: ITrack) => record.key === editingKey;
 
     const edit = (record: ITrack) => {
         form.setFieldsValue({ ...record });
@@ -190,6 +199,7 @@ export default function TrackTable() {
                     body: {
                         cell: EditableCell,
                     },
+
                 }}
                 bordered
                 columns={mergedColumns}

@@ -17,12 +17,6 @@ export interface ITrackListState {
     error: ITrackListError | null;
 }
 
-export interface ITrackState {
-    await: boolean | null;
-    responseData: ITrack | null;
-    error: ITrackListError | null;
-}
-
 export interface ITracksListSuccessAction {
     type: typeof TRACKS_LIST_SUCCESS;
     payload: ITrack[];

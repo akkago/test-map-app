@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectedTrackSelector, tracksSelector } from "../../store/reducers/tracks.reducer";
+import { selectedTrackSelector, selector, trackPointsSelector, tracksSelector } from "../../store/reducers/tracks.reducer";
 import { setSelectedTrack } from "../../store/saga/selectedTrack";
+import { fetchTrackPoints } from "../../store/saga/trackPoints";
 import { fetchTracks } from "../../store/saga/tracks";
 
 const useTrackTable = () => {
     const dispatch = useDispatch();
     const tracks = useSelector(tracksSelector);
+    const trackPoints = useSelector(trackPointsSelector);
+    const aa = useSelector(selector);
+    
     const selectedTrack = useSelector(selectedTrackSelector);
 
     const onSelectedTrackChange = (trackKey: React.Key[]) => {
@@ -18,10 +22,12 @@ const useTrackTable = () => {
 
     useEffect(() => {
         dispatch(fetchTracks());
-    }, [tracks]);
+        // dispatch(fetchTrackPoints());
+    }, [tracks, trackPoints]);
 
     return {
         tracks,
+        trackPoints,
         selectedTrack,
         onSelectedTrackChange
     }

@@ -10,17 +10,16 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const ConnectedApp = connect((state) => {
-  console.log(state);
-  return state;
-})(App);
+// const ConnectedApp = connect((state) => {
+//   console.log(state);
+//   alert(1)
+//   return state;
+// })(App);
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ConnectedApp />
-    </Provider>
-   </React.StrictMode>
+  <Provider store={store}>
+  <App />
+</Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

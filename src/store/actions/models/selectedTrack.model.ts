@@ -16,7 +16,11 @@ export interface ISelectedTrackAwaitAction {
     type: typeof SELECTED_TRACK_AWAIT;
     payload: null;
 }
-
+export interface ITrackState {
+    await: boolean | null;
+    responseData: ITrack | null;
+    error: ISelectedTrackError | null;
+}
 export interface IAuditActionState {
     await: boolean | null;
     responseData: ITrack | null;
