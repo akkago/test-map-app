@@ -5,10 +5,12 @@ import { ITrack } from "../models/tracks.model";
 export const selectedTrackAwaitAction = () => ({
   type: SELECTED_TRACK_AWAIT,
 });
+
 export const selectedTrackSuccessAction = (payload?: ITrack) => ({
   type: SELECTED_TRACK_SUCCESS,
   payload,
 });
+
 export const selectedTrackErrorAction = (payload: ISelectedTrackError) => ({
   type: SELECTED_TRACK_ERROR,
   payload,

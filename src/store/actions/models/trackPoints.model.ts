@@ -5,13 +5,13 @@ export interface ITrackPointListError extends IBaseError { }
 
 export interface ITrackPointListState {
     await: boolean | null;
-    responseData: any[] | null;
+    responseData: any | null;
     error: ITrackPointListError | null;
 }
 
 export interface ITrackPointListSuccessAction {
     type: typeof TRACK_POINTS_LIST_SUCCESS;
-    payload: any[];
+    payload: any;
 }
 export interface ITrackPointListErrorAction {
     type: typeof TRACK_POINTS_LIST_ERROR;

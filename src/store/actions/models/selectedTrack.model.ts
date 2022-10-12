@@ -25,8 +25,7 @@ export interface IAuditActionState {
     await: boolean | null;
     responseData: ITrack | null;
     error: ISelectedTrackError | null;
-  }
-
+}
 export type ISelectedTrackActionAction = ISelectedTrackSuccessAction
     | ISelectedTrackErrorAction
     | ISelectedTrackAwaitAction;

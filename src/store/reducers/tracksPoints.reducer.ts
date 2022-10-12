@@ -13,7 +13,7 @@ export const TrackPointsReducer = (
   state = initialTrackPointListState,
   action: TTrackPointListAction
 ): ITrackPointListState => {
-  const { type, payload, } = action;
+  const { type, payload } = action;
   switch (type) {
     case TRACK_POINTS_LIST_AWAIT:
       return {

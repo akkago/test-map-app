@@ -21,11 +21,6 @@ function* fetchTrackPointsAsync() {
     result.push(...dataStarts);
     result.push(...dataEnds);
     result = _.uniqWith(result, _.isEqual);
-    // const data = yield call(() => {
-    //   return fetch('https://dog.ceo/api/breeds/image/random')
-    //           .then(res => res.json())
-    //   }
-    // );
     yield put(trackPointsSuccessAction(result));
   } catch (error) {
     yield put(trackPointsErrorAction(error as ITrackPointListError));

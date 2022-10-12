@@ -2,6 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import tracks from '../../mock/mock';
 import { tracksAwaitAction, tracksErrorAction, tracksSuccessAction } from '../actions/action-creators/tracks.action-creator';
 import { ITrack, ITrackListError } from '../actions/models/tracks.model';
+import * as _ from 'lodash';
 
 export const fetchTracks = () => {
   return { type: 'FETCHED_TRACK' }
@@ -25,7 +26,6 @@ function* fetchTracksAsync() {
     yield put(tracksErrorAction(error as ITrackListError));
   }
 }
-
 
 export const updateTracks = (tracks?: ITrack[]) => {
   return { type: 'UPDATE_TRACK', data: tracks }

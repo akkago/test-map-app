@@ -13,5 +13,4 @@ export const TracksAllReducer = combineReducers({
 
 export const tracksSelector = (state: RootState) => state.tracks.all.responseData;
 export const trackPointsSelector = (state: RootState) => state.tracks.trackPoints.responseData;
-export const selector = (state: RootState) => state.tracks;
 export const selectedTrackSelector = (state: RootState) => state.tracks.selectedTrack;
