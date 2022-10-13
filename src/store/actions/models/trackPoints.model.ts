@@ -5,7 +5,7 @@ export interface ITrackPointListError extends IBaseError { }
 
 export interface ITrackPointListState {
     await: boolean | null;
-    responseData: any | null;
+    responseData: number[][] | null;
     error: ITrackPointListError | null;
 }
 

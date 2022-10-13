@@ -6,8 +6,8 @@ export interface ITrackListError extends IBaseError { }
 export interface ITrack {
     key: string;
     name: string;
-    start: any;
-    end: any;
+    start: number[];
+    end: number[];
     track: any;
 }
 

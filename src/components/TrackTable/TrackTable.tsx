@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, InputNumber, Popconfirm, Select, Space, Table, Typography } from 'antd';
 import useTrackTable from './TrackTable.hook';
 import { ITrack } from '../../store/actions/models/tracks.model';
-import { updateTracks } from '../../store/saga/tracks';
 
 const { Option } = Select;
 
@@ -10,70 +9,17 @@ interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     editing: boolean;
     dataIndex: string;
     title: any;
-    // inputType: 'number' | 'text';
     record: ITrack;
     index: number;
     children: React.ReactNode;
 }
 
-const EditableCell: React.FC<EditableCellProps> = ({
-    editing,
-    dataIndex,
-    title,
-    // inputType,
-    record,
-    index,
-    children,
-    ...restProps
-}) => {
-
-    const {
-        trackPoints,
-    } = useTrackTable();
-
-    // <Input />
-    // <Select defaultValue="lucy" style={{ width: 120 }} onChange={}>
-    //                     <Option value="jack">Jack</Option>
-    //                     <Option value="lucy">Lucy</Option>
-    //                     <Option value="Yiminghe">yiminghe</Option>
-    //                 </Select>
-    const options = trackPoints?.map((tp) => <Option key={tp} value={tp}>{tp}</Option>);
-    return (
-        <td {...restProps}>
-            {editing ? (
-                <Form.Item
-                    name={dataIndex}
-                    style={{ margin: 0 }}
-                    rules={[
-                        {
-                            required: true,
-                            message: `Please Input ${title}!`,
-                        },
-                    ]}
-                >
-                    <Select /*defaultValue={record[dataIndex]}*/ style={{ width: 120 }} >
-                        {options}
-                        {/* <Option value="jack">Jack</Option>
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="Yiminghe">yiminghe</Option>
-                        <Option value={record[dataIndex]}>{record[dataIndex]}</Option> */}
-                    </Select>
-
-
-                </Form.Item>
-            ) : (
-                children
-            )}
-        </td>
-    );
-};
-
-
 export default function TrackTable() {
     const {
         tracks,
         onSelectedTrackChange,
-        // trackPoints,
+        onUpdateTracks,
+        trackPoints,
         selectedTrack
     } = useTrackTable();
     const [form] = Form.useForm();
@@ -81,8 +27,53 @@ export default function TrackTable() {
     const isEditing = (record: ITrack) => record.key === editingKey;
 
 
-    
 
+    const EditableCell: React.FC<EditableCellProps> = ({
+        editing,
+        dataIndex,
+        title,
+        record,
+        index,
+        children,
+        ...restProps
+    }) => {
+
+        const options = trackPoints?.map((tp) => (
+            <Option
+                key={tp.join('')}
+                value={tp.join(':')}
+            >
+                {tp.join(':')}
+            </Option>
+        ));
+
+        return (
+            <td {...restProps}>
+                {editing ? (
+                    <Form.Item
+                        name={dataIndex}
+                        style={{ margin: 0 }}
+                        rules={[
+                            {
+                                required: true,
+                                message: `Please Input ${title}!`,
+                            },
+                        ]}
+                    >
+                        <Select
+                            /*defaultValue={record[dataIndex]}*/
+                            style={{ width: 120 }}
+                        // onChange={handleOptionsChange}
+                        >
+                            {options}
+                        </Select>
+                    </Form.Item>
+                ) : (
+                    children
+                )}
+            </td>
+        );
+    };
 
     const edit = (record: ITrack) => {
         form.setFieldsValue({ ...record });
@@ -95,9 +86,14 @@ export default function TrackTable() {
 
     const save = async (key: React.Key) => {
         try {
-            // const row = (await form.validateFields()) as ITrack;
-            const row = (await form.validateFields()) as any;
-
+            let row = (await form.validateFields()) as any;
+            Object.keys(row).map((key: string) => {
+                if (typeof row[key] === 'string') {
+                    row[key] = row[key].split(':').map(function (item) {
+                        return parseInt(item, 10);
+                    });
+                }
+            });
             const newData = [...tracks || []];
             const index = newData.findIndex(item => key === item.key);
             if (index > -1) {
@@ -106,11 +102,11 @@ export default function TrackTable() {
                     ...item,
                     ...row,
                 });
-                updateTracks(newData);
+                onUpdateTracks(newData);
                 setEditingKey('');
             } else {
                 newData.push(row);
-                updateTracks(newData);
+                onUpdateTracks(newData);
                 setEditingKey('');
             }
         } catch (errInfo) {

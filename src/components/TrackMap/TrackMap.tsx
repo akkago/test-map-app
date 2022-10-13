@@ -31,16 +31,16 @@ export default function TrackMap() {
             />
             {selectedTrack?.responseData && <>
                 <Marker
-                    position={selectedTrack?.responseData?.start}
+                    position={selectedTrack?.responseData?.start as any}
                     icon={markerIcon}
                 />
 
                 <Polyline
                     pathOptions={limeOptions}
-                    positions={selectedTrack?.responseData?.track}
+                    positions={selectedTrack?.responseData?.track as any}
                 />
                 <Marker
-                    position={selectedTrack?.responseData?.end}
+                    position={selectedTrack?.responseData?.end as any}
                     icon={markerIcon}
                 />
             </>
